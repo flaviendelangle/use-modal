@@ -18,8 +18,8 @@ export enum ModalState {
 
 export type Modal<RefElement> = {
   state: ModalState
-  close: (e?: Event) => void
-  overlayClick: (e: Event) => void
+  close: (...args: any[]) => void
+  overlayClick: (e: React.MouseEvent<RefElement> | MouseEvent) => void
   ref: React.Ref<RefElement>
   hasAlreadyBeenOpened: boolean
 }
