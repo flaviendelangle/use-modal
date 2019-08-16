@@ -1,0 +1,68 @@
+{
+  "name": "@delangle/use-modal",
+  "version": "0.0.1",
+  "private": false,
+  "description": "React hook for modal management",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/typings/index.d.ts",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && bili && npm run build:types",
+    "build:dev": "npm run clean && tsc",
+    "build:watch": "npm run clean && tsc --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "postbuild": "node ./scripts/postbuild.js",
+    "publish": "cd dist && npm publish --access public && cd ..",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint \"src/**\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flaviendelangle/use-modal.git"
+  },
+  "author": "Flavien DELANGLE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flaviendelangle/use-modal/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "homepage": "https://github.com/flaviendelangle/use-modal#readme",
+  "dependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@habx/eslint-config-client": "^2.0.6",
+    "@testing-library/dom": "^6.0.1",
+    "@testing-library/react": "^8.0.1",
+    "@types/jest": "^24.0.15",
+    "@types/lodash": "^4.14.136",
+    "@types/react": "^16.8.20",
+    "@types/sinon": "^7.0.13",
+    "awesome-typescript-loader": "^5.2.1",
+    "bili": "^4.8.0",
+    "cross-env": "^5.2.0",
+    "husky": "^3.0.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.0.1",
+    "lodash": "^4.17.15",
+    "react-hooks-testing-library": "^0.6.0",
+    "react-test-renderer": "^16.9.0",
+    "rimraf": "^2.6.3",
+    "rollup-plugin-typescript2": "^0.22.0",
+    "sinon": "^7.3.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  }
+}
