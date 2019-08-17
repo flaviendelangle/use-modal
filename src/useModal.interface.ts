@@ -7,7 +7,7 @@ export type ModalConfig<
   persistent: boolean
   animated: boolean
   animationDuration: number
-  onClose?: (e: Event) => void
+  onClose?: () => void
   ref?: React.Ref<ContainerElement>
 }
 
@@ -18,13 +18,9 @@ export enum ModalState {
   closed = 'closed',
 }
 
-export type Modal<
-  ContainerElement extends HTMLElement = HTMLDivElement,
-  OverlayElement extends HTMLElement = HTMLDivElement
-> = {
+export type Modal<ContainerElement extends HTMLElement = HTMLDivElement> = {
   state: ModalState
   close: (...args: any[]) => void
-  overlayClick: (e: React.MouseEvent<OverlayElement> | MouseEvent) => void
   ref: React.Ref<ContainerElement>
   hasAlreadyBeenOpened: boolean
 }

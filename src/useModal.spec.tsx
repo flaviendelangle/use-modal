@@ -1,6 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
 import { renderHook, act } from '@testing-library/react-hooks'
-import * as React from 'react'
 import * as sinon from 'sinon'
 
 import useModal from './useModal'
@@ -170,12 +169,10 @@ describe('useModal hook', () => {
       onClose: sinon.spy(),
       ref: { current: modalRef },
     }
-    const { result, unmount } = renderHook(() => useModal(config))
+    const { unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({
-        target: null,
-      } as unknown) as React.MouseEvent<HTMLDivElement>)
+      fireEvent.click(window)
     })
 
     expect(config.onClose.calledOnce).toBe(true)
@@ -192,12 +189,10 @@ describe('useModal hook', () => {
       onClose: sinon.spy(),
       ref: { current: modalRef },
     }
-    const { result, unmount } = renderHook(() => useModal(config))
+    const { unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({
-        target: null,
-      } as unknown) as React.MouseEvent<HTMLDivElement>)
+      fireEvent.click(window)
     })
 
     expect(config.onClose.notCalled).toBe(true)
@@ -213,12 +208,10 @@ describe('useModal hook', () => {
       onClose: sinon.spy(),
       ref: { current: modalRef },
     }
-    const { result, unmount } = renderHook(() => useModal(config))
+    const { unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({
-        target: null,
-      } as unknown) as React.MouseEvent<HTMLElement>)
+      fireEvent.click(window)
     })
 
     expect(config.onClose.notCalled).toBe(true)

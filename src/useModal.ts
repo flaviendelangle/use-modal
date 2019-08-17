@@ -49,12 +49,9 @@ const useDelayedOpen = (open: boolean, animated: boolean): boolean => {
   return !!(canBeOpened && open)
 }
 
-const useModal = <
-  ContainerElement extends HTMLElement = HTMLDivElement,
-  OverlayElement extends HTMLElement = HTMLDivElement
->(
+const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
   baseConfig: Partial<ModalConfig<ContainerElement>>
-): Modal<ContainerElement, OverlayElement> => {
+): Modal<ContainerElement> => {
   const config: ModalConfig<ContainerElement> = {
     ...DEFAULT_CONFIG,
     ...baseConfig,
@@ -78,25 +75,11 @@ const useModal = <
     }
   }, [isLocalOpened, open])
 
-  const handleClose = React.useCallback((e = null) => {
+  const handleClose = React.useCallback(() => {
     if (configRef.current.onClose) {
-      configRef.current.onClose(e)
+      configRef.current.onClose()
     }
   }, [])
-
-  const handleOverlayClick = React.useCallback(
-    e => {
-      if (
-        !configRef.current.persistent &&
-        configRef.current.open &&
-        domRef.current &&
-        !domRef.current.contains(e.target)
-      ) {
-        handleClose(e)
-      }
-    },
-    [domRef, handleClose]
-  )
 
   React.useEffect(() => {
     if (configRef.current.animated) {
@@ -116,16 +99,29 @@ const useModal = <
         configRef.current.open &&
         e.keyCode === ESCAPE_KEY
       ) {
-        handleClose(e)
+        handleClose()
+      }
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      if (
+        !configRef.current.persistent &&
+        configRef.current.open &&
+        domRef.current &&
+        !domRef.current.contains(e.target as Node)
+      ) {
+        handleClose()
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('click', handleClick)
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('click', handleClick)
     }
-  }, [handleClose])
+  }, [domRef, handleClose])
 
   const state = React.useMemo<ModalState>(() => {
     if (!open && !isLocalOpened) {
@@ -146,7 +142,6 @@ const useModal = <
   return {
     state,
     close: handleClose,
-    overlayClick: handleOverlayClick,
     ref: domRef,
     hasAlreadyBeenOpened,
   }

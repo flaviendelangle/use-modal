@@ -15,7 +15,7 @@ const config: Config = {
 
   input: 'src/index.ts',
   output: {
-    format: ['cjs', 'esm'],
+    format: ['cjs', 'esm', 'cjs-min'],
   },
 }
 
