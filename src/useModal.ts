@@ -4,6 +4,13 @@ import { ModalConfig, Modal, ModalState } from './useModal.interface'
 
 const ESCAPE_KEY = 27
 
+const DEFAULT_CONFIG: Omit<ModalConfig<HTMLElement>, 'ref'> = {
+  animationDuration: 300,
+  animated: false,
+  persistent: false,
+  open: false,
+}
+
 const useMergedRef = <RefElement>(
   ref: React.Ref<RefElement> | null | undefined
 ): React.RefObject<RefElement> => {
@@ -22,10 +29,7 @@ const useHasAlreadyBeenOpened = (open: boolean): boolean => {
   return hasAlreadyBeenOpened.current
 }
 
-const useDelayedOpen = (
-  open: boolean | undefined,
-  animated: boolean | undefined
-): boolean => {
+const useDelayedOpen = (open: boolean, animated: boolean): boolean => {
   const hasAlreadyRendered = React.useRef<boolean>(false)
 
   const shouldDelayOpening = !hasAlreadyRendered.current && animated
@@ -45,14 +49,21 @@ const useDelayedOpen = (
   return !!(canBeOpened && open)
 }
 
-const useModal = <RefElement extends HTMLElement>(
-  config: ModalConfig<RefElement>
-): Modal<RefElement> => {
+const useModal = <
+  ContainerElement extends HTMLElement = HTMLDivElement,
+  OverlayElement extends HTMLElement = HTMLDivElement
+>(
+  baseConfig: Partial<ModalConfig<ContainerElement>>
+): Modal<ContainerElement, OverlayElement> => {
+  const config: ModalConfig<ContainerElement> = {
+    ...DEFAULT_CONFIG,
+    ...baseConfig,
+  }
+
   const open = useDelayedOpen(config.open, config.animated)
   const hasAlreadyBeenOpened = useHasAlreadyBeenOpened(open)
 
-  const domRef = useMergedRef<RefElement>(config.ref)
-
+  const domRef = useMergedRef<ContainerElement>(config.ref)
   const configRef = React.useRef(config)
 
   const [isLocalOpened, setLocalOpened] = React.useState<boolean>(false)
@@ -90,7 +101,7 @@ const useModal = <RefElement extends HTMLElement>(
   React.useEffect(() => {
     if (configRef.current.animated) {
       const timeout = setTimeout(
-        () => setLocalOpened(!!open),
+        () => setLocalOpened(open),
         configRef.current.animationDuration
       )
 

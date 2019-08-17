@@ -1,5 +1,6 @@
 import { fireEvent } from '@testing-library/dom'
 import { renderHook, act } from '@testing-library/react-hooks'
+import * as React from 'react'
 import * as sinon from 'sinon'
 
 import useModal from './useModal'
@@ -172,7 +173,9 @@ describe('useModal hook', () => {
     const { result, unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({ target: null } as unknown) as Event)
+      result.current.overlayClick(({
+        target: null,
+      } as unknown) as React.MouseEvent<HTMLDivElement>)
     })
 
     expect(config.onClose.calledOnce).toBe(true)
@@ -192,7 +195,9 @@ describe('useModal hook', () => {
     const { result, unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({ target: null } as unknown) as Event)
+      result.current.overlayClick(({
+        target: null,
+      } as unknown) as React.MouseEvent<HTMLDivElement>)
     })
 
     expect(config.onClose.notCalled).toBe(true)
@@ -211,7 +216,9 @@ describe('useModal hook', () => {
     const { result, unmount } = renderHook(() => useModal(config))
 
     act(() => {
-      result.current.overlayClick(({ target: null } as unknown) as Event)
+      result.current.overlayClick(({
+        target: null,
+      } as unknown) as React.MouseEvent<HTMLElement>)
     })
 
     expect(config.onClose.notCalled).toBe(true)
