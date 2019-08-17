@@ -13,7 +13,6 @@
     "build:dev": "npm run clean && tsc",
     "build:watch": "npm run clean && tsc --watch",
     "build:types": "tsc --emitDeclarationOnly",
-    "publish": "npm publish --access public",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "type:coverage": "tscov -d",

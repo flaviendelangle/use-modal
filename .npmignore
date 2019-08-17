@@ -1,9 +1,6 @@
 # Environment Configuration
 .env
 
-# Build output folders
-dist/
-
 # Logs
 logs
 *.log
@@ -29,3 +26,15 @@ npm-debug.log
 # Visual Studio Code
 .vscode
 .history
+
+# flow-typed Lib Defs
+flow-typed/
+
+# Flow Coverage Report
+flow-coverage/
+
+# OSX Files
+.DS_Store
+
+.storybook-static/
+storybook-deploy
