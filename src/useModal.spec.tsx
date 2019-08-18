@@ -110,7 +110,7 @@ describe('useModal hook', () => {
     unmount()
   })
 
-  it('should return hasAlreadyBeenOpened = false if the open = false', () => {
+  it('should return hasAlreadyBeenOpened = false if open = false', () => {
     const config = { open: false }
     const { result, unmount } = renderHook(() => useModal(config))
 
@@ -119,9 +119,21 @@ describe('useModal hook', () => {
     unmount()
   })
 
-  it('should return hasAlreadyBeenOpened = true if the open = true', () => {
+  it('should return hasAlreadyBeenOpened = true if open = true', () => {
     const config = { open: true }
     const { result, unmount } = renderHook(() => useModal(config))
+
+    expect(result.current.hasAlreadyBeenOpened).toBe(true)
+
+    unmount()
+  })
+
+  it('should return hasAlreadyBeenOpened = true if open switched from false to true', () => {
+    const config = { open: false }
+    const { result, rerender, unmount } = renderHook(() => useModal(config))
+
+    config.open = true
+    rerender()
 
     expect(result.current.hasAlreadyBeenOpened).toBe(true)
 
@@ -236,7 +248,7 @@ describe('useModal hook', () => {
     unmount()
   })
 
-  it('should call onClose if press Escape and persistent = true', () => {
+  it('should not call onClose if press Escape and persistent = true', () => {
     const config = {
       open: true,
       animated: false,
