@@ -14,6 +14,7 @@ const DEFAULT_CONFIG: Omit<ModalFullConfig<HTMLElement>, 'ref'> = {
   animated: false,
   persistent: false,
   open: false,
+  onClose: () => {},
 }
 
 const useMergedRef = <RefElement>(
@@ -81,9 +82,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
   }, [isLocalOpened, open])
 
   const handleClose = React.useCallback(() => {
-    if (configRef.current.onClose) {
-      configRef.current.onClose()
-    }
+    configRef.current.onClose()
   }, [])
 
   React.useEffect(() => {

@@ -279,4 +279,20 @@ describe('useModal hook', () => {
 
     unmount()
   })
+
+  it('should return opened if press Escape but no onClose given', () => {
+    const config = {
+      open: true,
+      animated: false,
+    }
+    const { unmount, result } = renderHook(() => useModal(config))
+
+    act(() => {
+      fireEvent.keyDown(window, { key: 'Escape', keyCode: 27 })
+    })
+
+    expect(result.current.state).toBe(ModalState.opened)
+
+    unmount()
+  })
 })

@@ -7,7 +7,7 @@ export type ModalFullConfig<
   persistent: boolean
   animated: boolean
   animationDuration: number
-  onClose?: () => void
+  onClose: () => void
   ref?: React.Ref<ContainerElement>
 }
 
