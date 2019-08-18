@@ -1,10 +1,15 @@
 import * as React from 'react'
 
-import { ModalConfig, Modal, ModalState } from './useModal.interface'
+import {
+  ModalConfig,
+  ModalFullConfig,
+  Modal,
+  ModalState,
+} from './useModal.interface'
 
-const ESCAPE_KEY = 27
+const ESCAPE_KEY = 'Escape'
 
-const DEFAULT_CONFIG: Omit<ModalConfig<HTMLElement>, 'ref'> = {
+const DEFAULT_CONFIG: Omit<ModalFullConfig<HTMLElement>, 'ref'> = {
   animationDuration: 300,
   animated: false,
   persistent: false,
@@ -32,7 +37,7 @@ const useHasAlreadyBeenOpened = (open: boolean): boolean => {
 const useDelayedOpen = (open: boolean, animated: boolean): boolean => {
   const hasAlreadyRendered = React.useRef<boolean>(false)
 
-  const shouldDelayOpening = !hasAlreadyRendered.current && animated
+  const shouldDelayOpening = !hasAlreadyRendered.current && animated && open
 
   const [canBeOpened, setCanBeOpened] = React.useState<boolean>(
     !shouldDelayOpening
@@ -50,9 +55,9 @@ const useDelayedOpen = (open: boolean, animated: boolean): boolean => {
 }
 
 const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
-  baseConfig: Partial<ModalConfig<ContainerElement>>
+  baseConfig: ModalConfig<ContainerElement>
 ): Modal<ContainerElement> => {
-  const config: ModalConfig<ContainerElement> = {
+  const config: ModalFullConfig<ContainerElement> = {
     ...DEFAULT_CONFIG,
     ...baseConfig,
   }
@@ -97,7 +102,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
       if (
         !configRef.current.persistent &&
         configRef.current.open &&
-        e.keyCode === ESCAPE_KEY
+        e.key === ESCAPE_KEY
       ) {
         handleClose()
       }

@@ -17,11 +17,25 @@ describe('useModal hook', () => {
     unmount()
   })
 
-  it('should start opening on mount if not animated', () => {
+  it('should be opened on first render if not animated', () => {
     const config = { animated: false, open: true }
-    const { result, unmount } = renderHook(() => useModal(config))
+    const useSpyModal = sinon.spy(useModal)
+    const { result, unmount } = renderHook(() => useSpyModal(config))
 
     expect(result.current.state).toBe(ModalState.opened)
+
+    unmount()
+  })
+
+  it('should start opening on second render if animated', () => {
+    const config = { animated: true, open: true }
+    const useSpyModal = sinon.spy(useModal)
+    const { result, unmount } = renderHook(() => useSpyModal(config))
+
+    expect(useSpyModal.calledTwice).toBe(true)
+    expect(useSpyModal.firstCall.returnValue.state).toBe(ModalState.closed)
+    expect(useSpyModal.lastCall.returnValue.state).toBe(ModalState.opening)
+    expect(result.current.state).toBe(ModalState.opening)
 
     unmount()
   })

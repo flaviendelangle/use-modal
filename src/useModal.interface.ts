@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export type ModalConfig<
+export type ModalFullConfig<
   ContainerElement extends HTMLElement = HTMLDivElement
 > = {
   open: boolean
@@ -10,6 +10,10 @@ export type ModalConfig<
   onClose?: () => void
   ref?: React.Ref<ContainerElement>
 }
+
+export type ModalConfig<
+  ContainerElement extends HTMLElement = HTMLDivElement
+> = Partial<ModalFullConfig<ContainerElement>>
 
 export enum ModalState {
   opening = 'opening',
