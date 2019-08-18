@@ -17,6 +17,9 @@ const DEFAULT_CONFIG: Omit<ModalFullConfig<HTMLElement>, 'ref'> = {
   onClose: () => {},
 }
 
+const useSSRLayoutEffect =
+  typeof window === 'object' ? React.useLayoutEffect : React.useEffect
+
 const useMergedRef = <RefElement>(
   ref: React.Ref<RefElement> | null | undefined
 ): React.RefObject<RefElement> => {
@@ -75,7 +78,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
     configRef.current = config
   })
 
-  React.useLayoutEffect(() => {
+  useSSRLayoutEffect(() => {
     if (!configRef.current.animated && open !== isLocalOpened) {
       setLocalOpened(open)
     }
