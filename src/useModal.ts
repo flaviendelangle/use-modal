@@ -113,7 +113,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
     const handleClick = (e: MouseEvent) => {
       if (
         !configRef.current.persistent &&
-        configRef.current.open &&
+        isLocalOpened &&
         domRef.current &&
         !domRef.current.contains(e.target as Node)
       ) {
@@ -128,7 +128,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('click', handleClick)
     }
-  }, [domRef, handleClose])
+  }, [domRef, handleClose, isLocalOpened])
 
   const state = React.useMemo<ModalState>(() => {
     if (!open && !isLocalOpened) {
