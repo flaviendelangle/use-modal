@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import {
+  Modal,
   ModalConfig,
   ModalFullConfig,
-  Modal,
   ModalState,
 } from './useModal.interface'
 
@@ -74,6 +74,22 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
 
   const [isLocalOpened, setLocalOpened] = React.useState<boolean>(false)
 
+  const state = React.useMemo<ModalState>(() => {
+    if (!open && !isLocalOpened) {
+      return ModalState.closed
+    }
+
+    if (!open && isLocalOpened) {
+      return ModalState.closing
+    }
+
+    if (open && !isLocalOpened) {
+      return ModalState.opening
+    }
+
+    return ModalState.opened
+  }, [open, isLocalOpened])
+
   React.useEffect(() => {
     configRef.current = config
   })
@@ -113,7 +129,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
     const handleClick = (e: MouseEvent) => {
       if (
         !configRef.current.persistent &&
-        isLocalOpened &&
+        state === ModalState.opened &&
         domRef.current &&
         !domRef.current.contains(e.target as Node)
       ) {
@@ -128,23 +144,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('click', handleClick)
     }
-  }, [domRef, handleClose, isLocalOpened])
-
-  const state = React.useMemo<ModalState>(() => {
-    if (!open && !isLocalOpened) {
-      return ModalState.closed
-    }
-
-    if (!open && isLocalOpened) {
-      return ModalState.closing
-    }
-
-    if (open && !isLocalOpened) {
-      return ModalState.opening
-    }
-
-    return ModalState.opened
-  }, [open, isLocalOpened])
+  }, [domRef, handleClose, isLocalOpened, state])
 
   return {
     state,
