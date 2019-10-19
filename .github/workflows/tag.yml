@@ -1,12 +1,12 @@
 name: Pull Request CI
 
 on:
-  push:
+  create:
     tags:
       - '*'
 
 jobs:
-  build:
+  releaseOnNPM:
 
     runs-on: ubuntu-latest
 
@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: '10.x'
 
-      - name: npm intall
+      - name: npm install
         run: npm install
 
       - name: run build
         run: npm run build
 
       - name: npm publish
-        run: npm run publish
+        run: npm run publish --tag=latest

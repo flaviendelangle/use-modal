@@ -3,7 +3,7 @@ name: Pull Request CI
 on: pull_request
 
 jobs:
-  build:
+  lintAndTest:
 
     runs-on: ubuntu-latest
 
