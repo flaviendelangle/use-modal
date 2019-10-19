@@ -1,9 +1,8 @@
 name: New Tag
 
 on:
-  create:
-    tags:
-      - '*'
+  release:
+    types: [published]
 
 jobs:
   releaseOnNPM:
@@ -16,7 +15,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
 
       - name: npm install
         run: npm install
@@ -24,7 +23,12 @@ jobs:
       - name: run build
         run: npm run build
 
-      - name: npm publish
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      - name: Publish to NPM registry
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+          npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --tag=latest --access=public
