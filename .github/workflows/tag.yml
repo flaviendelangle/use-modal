@@ -1,6 +1,9 @@
 name: Pull Request CI
 
-on: tags
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -21,4 +24,5 @@ jobs:
       - name: run build
         run: npm run build
 
-      - npm publish
+      - name: npm publish
+        run: npm run publish
