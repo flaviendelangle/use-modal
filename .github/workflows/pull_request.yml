@@ -15,14 +15,14 @@ jobs:
       with:
         node-version: '12.x'
 
-    - name: npm intall
+    - name: Install dependenciess
       run: npm install
 
-    - name: run lint
+    - name: Linter
       run: npm run lint
 
-    - name: run test
+    - name: Test
       run: npm run test
 
-    - name: run build
+    - name: Build
       run: npm run build
