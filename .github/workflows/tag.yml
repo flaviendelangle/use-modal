@@ -1,4 +1,4 @@
-name: Pull Request CI
+name: New Tag
 
 on:
   create:
@@ -25,4 +25,4 @@ jobs:
         run: npm run build
 
       - name: npm publish
-        run: npm run publish --tag=latest
+        run: npm publish --tag=latest
