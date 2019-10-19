@@ -1,4 +1,4 @@
-name: New Tag
+name: Release CI
 
 on:
   release:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -20,13 +20,10 @@ jobs:
       - name: npm install
         run: npm install
 
-      - name: run build
+      - name: run run build
         run: npm run build
 
-      - uses: actions/setup-node@v1
-        with:
-          registry-url: 'https://registry.npmjs.org'
-      - name: Publish to NPM registry
+      - name: npm publish
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
           npm publish --access=public
