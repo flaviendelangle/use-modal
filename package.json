@@ -6,7 +6,7 @@
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/typings/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && bili",
