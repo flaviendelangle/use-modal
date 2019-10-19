@@ -13,17 +13,17 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@master
         with:
           node-version: '12.x'
 
-      - name: npm install
+      - name: Install dependencies
         run: npm install
 
-      - name: run run build
+      - name: Build
         run: npm run build
 
-      - name: npm publish
+      - name: Publish on NPM registry
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           npm publish --access=public
