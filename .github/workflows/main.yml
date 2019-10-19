@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
     branches:
-    - dev
+    - master
 
 jobs:
   build:
@@ -12,5 +12,17 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: lint
+      
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: npm intall
+      run: npm install
+      
+    - name: run lint
       run: npm run lint
+      
+    - name: run test
+      run: npm run test  
