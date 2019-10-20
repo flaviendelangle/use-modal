@@ -62,17 +62,17 @@ const Overlay = styled.div`
   flex-direction: column;
   z-index: 10;
 
-  &[data-state='opening'] {
+  .opening {
     animation: ${FADE_IN} 300ms linear 0ms;
   }
 
-  &[data-state='closing'] {
+  .closing {
     animation: ${FADE_IN} 300ms linear 0ms reverse;
     opacity: 0;
     pointer-events: none;
   }
 
-  &[data-state='closed'] {
+  .closed {
     opacity: 0;
     pointer-events: none;
   }
@@ -90,7 +90,7 @@ const Modal = () => {
   return (
     <React.Fragment>
       <button onClick={() => setOpen(true)}>Open</button>
-      <Overlay data-state={modal.state}>
+      <Overlay className={modal.state}>
           <dialog open={modal.state !== 'closed'}>
             Hello World
           </dialog>
@@ -118,7 +118,7 @@ declare const useModal: <ContainerElement extends HTMLElement = HTMLDivElement>(
 | persistent | should avoid closing the modal when press Escape or click outside | boolean | false |
 | animated | should have a "opening" and "closing" state to allow CSS animations | boolean | false |
 | animationDuration | time spent (in ms) in the "opening" and "closing" state | number | 300 |
-| ref | React reference to the main DOM Node of the Modal (useful if your modal use React.forwardRef) | React.Ref | null | 
+| ref | React reference to the main DOM Node of the Modal (useful if your modal use React.forwardRef\<ContainerElement\>) | React.Ref | null | 
 
 #### Modal\<ContainerElement\>
 
