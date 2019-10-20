@@ -3,13 +3,17 @@
 Handle the most common use cases to create a Modal-like component :
 
 - animation on enter / leave
-- close when press Escape of click outside
+- close when press Escape or click outside
 
 The rendering part is up to you, this hook can be used for modals, drawers, dropdown menus and pretty much any thing with an opened and closed state.
 
-### Usage
 
-#### Simple example
+[Usage](#usage)
+
+<a name="usage />
+## Usage
+
+### Simple example
 
 ```jsx harmony
 import * as React from 'react'
@@ -30,7 +34,7 @@ const Modal = () => {
 ```
 
 
-#### Add fadeIn / fadeOut animation
+### Add fadeIn / fadeOut animation
 
 ```jsx harmony
 import * as React from 'react'
@@ -96,10 +100,16 @@ const Modal = () => {
 }
 ```
 
+<a name="api />
+## API
 
-### API
+```typescript jsx
+declare const useModal: <ContainerElement extends HTMLElement = HTMLDivElement>(
+  baseConfig: Partial<ModalConfig<ContainerElement>>
+) => Modal<ContainerElement>
+```
 
-#### ModalConfig
+### ModalConfig
 
 | name | description | type | default value |
 | --- | --- | --- | --- |
@@ -109,3 +119,12 @@ const Modal = () => {
 | animated | should have a "opening" and "closing" state to allow CSS animations | boolean | false |
 | animationDuration | time spent (in ms) in the "opening" and "closing" state | number | 300 |
 | ref | React reference to the main DOM Node of the Modal (useful if your modal use React.forwardRef) | React.Ref | null | 
+
+#### Modal\<ContainerElement\>
+
+| name | description | type |
+| --- | --- | --- |
+| state | current state of the modal | 'opened' / 'closed' / 'opening' / 'closing' |
+| close | callback to close the modal | () => void |
+| ref | React reference to pass to the main DOM Node of the Modal | React.Ref\<ContainerElement\> |
+| hasAlreadyBeenOpened | Has the Modal already been in state = "opened" | boolean |
