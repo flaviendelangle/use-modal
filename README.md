@@ -9,8 +9,9 @@ The rendering part is up to you, this hook can be used for modals, drawers, drop
 
 
 [Usage](#usage)
+[API](#api)
 
-<a name="usage />
+<a name="usage" />
 ## Usage
 
 ### Simple example
@@ -100,7 +101,7 @@ const Modal = () => {
 }
 ```
 
-<a name="api />
+<a name="api" />
 ## API
 
 ```typescript jsx
