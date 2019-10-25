@@ -1,8 +1,9 @@
 name: Release CI
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   releaseOnNPM:
@@ -24,8 +25,7 @@ jobs:
         run: npm run build
 
       - name: Publish on NPM registry
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm publish --access=public
+        uses: mikeal/merge-release@master
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
