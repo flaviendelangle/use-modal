@@ -25,6 +25,6 @@ export enum ModalState {
 export type Modal<ContainerElement extends HTMLElement = HTMLDivElement> = {
   state: ModalState
   close: (...args: any[]) => void
-  ref: React.Ref<ContainerElement>
+  ref: React.RefObject<ContainerElement>
   hasAlreadyBeenOpened: boolean
 }
