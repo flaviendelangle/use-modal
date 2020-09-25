@@ -1,18 +1,22 @@
 {
   "compilerOptions": {
-    "rootDirs": ["./src"],
-    "outDir": "./dist",
+    "outDir": "./dist/esm",
     "declarationDir": "./dist/typings",
-    "moduleResolution": "node",
-    "removeComments": true,
+    "baseUrl": "typings",
+    "target": "ES5",
+    "module": "ES2015",
+    "moduleResolution": "Node",
+    "lib": ["ESNext", "DOM"],
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "strict": true,
+    "removeComments": false,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "strict": true,
-    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "typings"
+    "resolveJsonModule": true
   },
   "files": ["./src/index.ts"]
 }
