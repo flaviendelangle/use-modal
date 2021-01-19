@@ -15,6 +15,7 @@ const DEFAULT_CONFIG: Omit<ModalFullConfig<HTMLElement>, 'ref'> = {
   persistent: false,
   open: false,
   onClose: () => {},
+  value: undefined,
 }
 
 const useSSRLayoutEffect =
@@ -55,13 +56,26 @@ const useDelayedOpen = (open: boolean, animated: boolean): boolean => {
     }
   }, [canBeOpened])
 
-  return !!(canBeOpened && open)
+  return canBeOpened && open
 }
 
-const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
+const useValue = <Value = any>(value: Value, state: ModalState): Value => {
+  const valueRef = React.useRef(value)
+
+  if ([ModalState.opened, ModalState.opening].includes(state)) {
+    valueRef.current = value
+  }
+
+  return valueRef.current
+}
+
+const useModal = <
+  ContainerElement extends HTMLElement = HTMLDivElement,
+  Value = any
+>(
   baseConfig: ModalConfig<ContainerElement>
-): Modal<ContainerElement> => {
-  const config: ModalFullConfig<ContainerElement> = {
+): Modal<ContainerElement, Value> => {
+  const config: ModalFullConfig<ContainerElement, Value> = {
     ...DEFAULT_CONFIG,
     ...baseConfig,
   }
@@ -89,6 +103,8 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
 
     return ModalState.opened
   }, [open, isLocalOpened])
+
+  const value = useValue(config.value, state)
 
   React.useEffect(() => {
     configRef.current = config
@@ -151,6 +167,7 @@ const useModal = <ContainerElement extends HTMLElement = HTMLDivElement>(
     close: handleClose,
     ref: domRef,
     hasAlreadyBeenOpened,
+    value,
   }
 }
 
