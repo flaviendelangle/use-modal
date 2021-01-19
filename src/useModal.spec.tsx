@@ -3,13 +3,13 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import * as sinon from 'sinon'
 
 import useModal from './useModal'
-import { ModalState } from './useModal.interface'
+import { ModalConfig, ModalState } from './useModal.interface'
 
 jest.useFakeTimers()
 
 describe('useModal hook', () => {
   it('should return state = "closed" if config.open = false', () => {
-    const config = { open: false }
+    const config: ModalConfig = { open: false }
     const { result, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.state).toBe(ModalState.closed)
@@ -18,7 +18,7 @@ describe('useModal hook', () => {
   })
 
   it('should be opened on first render if not animated', () => {
-    const config = { animated: false, open: true }
+    const config: ModalConfig = { animated: false, open: true }
     const useSpyModal = sinon.spy(useModal)
     const { result, unmount } = renderHook(() => useSpyModal(config))
 
@@ -28,7 +28,7 @@ describe('useModal hook', () => {
   })
 
   it('should start opening on second render if animated', () => {
-    const config = { animated: true, open: true }
+    const config: ModalConfig = { animated: true, open: true }
     const useSpyModal = sinon.spy(useModal)
     const { result, unmount } = renderHook(() => useSpyModal(config))
 
@@ -41,7 +41,11 @@ describe('useModal hook', () => {
   })
 
   it('should switch directly from closed to opened if animated = false', () => {
-    let config = { animated: false, open: false, animationDuration: 1000 }
+    let config: ModalConfig = {
+      animated: false,
+      open: false,
+      animationDuration: 1000,
+    }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.state).toBe(ModalState.closed)
@@ -55,7 +59,11 @@ describe('useModal hook', () => {
   })
 
   it('should switch from closed to opening to opened if animated = true', async () => {
-    let config = { animated: true, open: false, animationDuration: 1000 }
+    let config: ModalConfig = {
+      animated: true,
+      open: false,
+      animationDuration: 1000,
+    }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.state).toBe(ModalState.closed)
@@ -81,7 +89,11 @@ describe('useModal hook', () => {
   })
 
   it('should switch directly from opened to closed if animated = false and modal.close is called', () => {
-    let config = { animated: false, open: true, animationDuration: 1000 }
+    let config: ModalConfig = {
+      animated: false,
+      open: true,
+      animationDuration: 1000,
+    }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.state).toBe(ModalState.opened)
@@ -95,7 +107,11 @@ describe('useModal hook', () => {
   })
 
   it('should switch from opened to closing to closed if animated = true and modal.close is called', async () => {
-    let config = { animated: true, open: true, animationDuration: 1000 }
+    let config: ModalConfig = {
+      animated: true,
+      open: true,
+      animationDuration: 1000,
+    }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     act(() => {
@@ -125,7 +141,7 @@ describe('useModal hook', () => {
   })
 
   it('should return hasAlreadyBeenOpened = false if open = false', () => {
-    const config = { open: false }
+    const config: ModalConfig = { open: false }
     const { result, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.hasAlreadyBeenOpened).toBe(false)
@@ -134,7 +150,7 @@ describe('useModal hook', () => {
   })
 
   it('should return hasAlreadyBeenOpened = true if open = true', () => {
-    const config = { open: true }
+    const config: ModalConfig = { open: true }
     const { result, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.hasAlreadyBeenOpened).toBe(true)
@@ -143,7 +159,7 @@ describe('useModal hook', () => {
   })
 
   it('should return hasAlreadyBeenOpened = true if open switched from false to true', () => {
-    const config = { open: false }
+    const config: ModalConfig = { open: false }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     config.open = true
@@ -155,7 +171,7 @@ describe('useModal hook', () => {
   })
 
   it('should return hasAlreadyBeenOpened = true if the open switch from false to true', () => {
-    const config = { open: false }
+    const config: ModalConfig = { open: false }
     const { result, rerender, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.hasAlreadyBeenOpened).toBe(false)
@@ -170,7 +186,7 @@ describe('useModal hook', () => {
 
   it('should return the given ref if any', () => {
     const ref = { current: null }
-    const config = { ref, open: false }
+    const config: ModalConfig = { ref, open: false }
     const { result, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.ref).toBe(ref)
@@ -179,7 +195,7 @@ describe('useModal hook', () => {
   })
 
   it('should return an empty ref if no ref given', () => {
-    const config = { open: false }
+    const config: ModalConfig = { open: false }
     const { result, unmount } = renderHook(() => useModal(config))
 
     expect(result.current.ref).toMatchObject({ current: null })
@@ -188,11 +204,13 @@ describe('useModal hook', () => {
   })
 
   it('should call onClose if click on overlay outside the modal and persistent = false', () => {
-    const modalRef = ({ contains: () => false } as unknown) as HTMLElement
-    const config = {
+    const modalRef = ({ contains: () => false } as unknown) as HTMLDivElement
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
       open: true,
       animated: false,
-      onClose: sinon.spy(),
+      onClose,
       ref: { current: modalRef },
     }
     const { unmount } = renderHook(() => useModal(config))
@@ -201,18 +219,20 @@ describe('useModal hook', () => {
       fireEvent.click(window)
     })
 
-    expect(config.onClose.calledOnce).toBe(true)
+    expect(onClose.calledOnce).toBe(true)
 
     unmount()
   })
 
   it('should not call onClose if click on overlay outside the modal and persistent = true', () => {
-    const modalRef = ({ contains: () => false } as unknown) as HTMLElement
-    const config = {
+    const modalRef = ({ contains: () => false } as unknown) as HTMLDivElement
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
       open: true,
       animated: false,
       persistent: true,
-      onClose: sinon.spy(),
+      onClose,
       ref: { current: modalRef },
     }
     const { unmount } = renderHook(() => useModal(config))
@@ -221,17 +241,19 @@ describe('useModal hook', () => {
       fireEvent.click(window)
     })
 
-    expect(config.onClose.notCalled).toBe(true)
+    expect(onClose.notCalled).toBe(true)
 
     unmount()
   })
 
   it('should not call onClose if click on overlay inside the modal', () => {
-    const modalRef = ({ contains: () => true } as unknown) as HTMLElement
-    const config = {
+    const modalRef = ({ contains: () => true } as unknown) as HTMLDivElement
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
       open: true,
       animated: false,
-      onClose: sinon.spy(),
+      onClose,
       ref: { current: modalRef },
     }
     const { unmount } = renderHook(() => useModal(config))
@@ -240,16 +262,18 @@ describe('useModal hook', () => {
       fireEvent.click(window)
     })
 
-    expect(config.onClose.notCalled).toBe(true)
+    expect(onClose.notCalled).toBe(true)
 
     unmount()
   })
 
   it('should call onClose if press Escape', () => {
-    const config = {
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
       open: true,
       animated: false,
-      onClose: sinon.spy(),
+      onClose,
     }
     const { unmount } = renderHook(() => useModal(config))
 
@@ -257,17 +281,19 @@ describe('useModal hook', () => {
       fireEvent.keyDown(window, { key: 'Escape', keyCode: 27 })
     })
 
-    expect(config.onClose.calledOnce).toBe(true)
+    expect(onClose.calledOnce).toBe(true)
 
     unmount()
   })
 
   it('should not call onClose if press Escape and persistent = true', () => {
-    const config = {
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
       open: true,
       animated: false,
       persistent: true,
-      onClose: sinon.spy(),
+      onClose,
     }
     const { unmount } = renderHook(() => useModal(config))
 
@@ -275,13 +301,13 @@ describe('useModal hook', () => {
       fireEvent.keyDown(window, { key: 'Escape', keyCode: 27 })
     })
 
-    expect(config.onClose.notCalled).toBe(true)
+    expect(onClose.notCalled).toBe(true)
 
     unmount()
   })
 
   it('should return opened if press Escape but no onClose given', () => {
-    const config = {
+    const config: ModalConfig = {
       open: true,
       animated: false,
     }
@@ -292,6 +318,49 @@ describe('useModal hook', () => {
     })
 
     expect(result.current.state).toBe(ModalState.opened)
+
+    unmount()
+  })
+
+  it('should not change the value when closing', () => {
+    const config: ModalConfig = {
+      value: 'test_value',
+      open: true,
+      animated: true,
+    }
+
+    const { unmount, result, rerender } = renderHook(() => useModal(config))
+
+    config.open = false
+    config.value = null
+
+    rerender()
+
+    expect(result.current.value).toEqual('test_value')
+
+    unmount()
+  })
+
+  it('should change the value when opening again', () => {
+    const config: ModalConfig = {
+      value: 'test_value',
+      open: true,
+      animated: true,
+    }
+
+    const { unmount, result, rerender } = renderHook(() => useModal(config))
+
+    config.open = false
+    config.value = null
+
+    rerender()
+
+    config.open = true
+    config.value = 'test_value_2'
+
+    rerender()
+
+    expect(result.current.value).toEqual('test_value_2')
 
     unmount()
   })
