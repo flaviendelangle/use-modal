@@ -168,6 +168,9 @@ const useModal = <
     ref: domRef,
     hasAlreadyBeenOpened,
     value,
+    animated: config.animated,
+    animationDuration: config.animationDuration,
+    persistent: config.persistent,
   }
 }
 
