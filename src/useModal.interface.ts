@@ -63,4 +63,7 @@ export type Modal<
   ref: React.RefObject<ContainerElement>
   hasAlreadyBeenOpened: boolean
   value: Value
+  persistent: boolean
+  animated: boolean
+  animationDuration: number
 }
