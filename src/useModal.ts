@@ -143,11 +143,15 @@ const useModal = <
     }
 
     const handleClick = (e: MouseEvent) => {
+      const target = e.target as Node | null
+
       if (
         !configRef.current.persistent &&
         state === ModalState.opened &&
         domRef.current &&
-        !domRef.current.contains(e.target as Node)
+        target &&
+        !domRef.current.contains(target) &&
+        !!target.parentNode
       ) {
         handleClose()
       }
