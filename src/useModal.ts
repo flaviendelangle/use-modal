@@ -150,8 +150,8 @@ const useModal = <
         state === ModalState.opened &&
         domRef.current &&
         target &&
-        !domRef.current.contains(target) &&
-        !!target.parentNode
+        target.isConnected &&
+        !domRef.current.contains(target)
       ) {
         handleClose()
       }

@@ -53,6 +53,7 @@
     "husky": "^4.0.10",
     "jest": "^26.4.2",
     "lint-staged": "^10.0.1",
+    "react": "^17.0.1",
     "react-hooks-testing-library": "^0.6.0",
     "react-test-renderer": "^16.9.0",
     "rimraf": "^3.0.0",
