@@ -1,6 +1,6 @@
 {
   "name": "@delangle/use-modal",
-  "version": "1.4.0",
+  "version": "1.9.0",
   "description": "React hook for modal management",
   "private": false,
   "sideEffects": false,
