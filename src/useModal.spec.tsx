@@ -215,11 +215,41 @@ describe('useModal hook', () => {
     }
     const { unmount } = renderHook(() => useModal(config))
 
+    const button = document.createElement('button')
+
+    document.body.appendChild(button)
+
     act(() => {
-      fireEvent.click(window)
+      fireEvent.click(button)
     })
 
     expect(onClose.calledOnce).toBe(true)
+
+    unmount()
+  })
+
+  it('should call onClose if click on an unmounted element', () => {
+    const modalRef = ({
+      contains: () => false,
+      isConnected: false,
+    } as unknown) as HTMLDivElement
+    const onClose = sinon.spy()
+
+    const config: ModalConfig = {
+      open: true,
+      animated: false,
+      onClose,
+      ref: { current: modalRef },
+    }
+    const { unmount } = renderHook(() => useModal(config))
+
+    const button = document.createElement('button')
+
+    act(() => {
+      fireEvent.click(button)
+    })
+
+    expect(onClose.notCalled).toBe(true)
 
     unmount()
   })
