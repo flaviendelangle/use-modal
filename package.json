@@ -45,7 +45,7 @@
     "@habx/eslint-config-client": "^6.0.0",
     "@liftr/tscov": "^2.0.0",
     "@testing-library/dom": "^7.30.0",
-    "@types/jest": "^26.0.0",
+    "@types/jest": "^26.0.20",
     "@types/react": "^17.0.3",
     "@types/sinon": "^9.0.11",
     "bili": "^5.0.2",
