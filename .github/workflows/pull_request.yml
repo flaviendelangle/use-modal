@@ -16,7 +16,7 @@ jobs:
         node-version: '15.x'
 
     - name: Install dependenciess
-      run: npm install
+      run: npm i
 
     - name: Linter
       run: npm run lint

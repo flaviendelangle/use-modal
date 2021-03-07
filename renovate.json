@@ -1,5 +1,36 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "rangeStrategy": "bump",
+  "separateMinorPatch": true,
+  "packageRules": [
+    {
+      "updateTypes": [
+        "minor",
+        "patch"
+      ],
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "automerge": true,
+      "labels": [
+        "dependencies"
+      ]
+    },
+    {
+      "updateTypes": [
+        "patch"
+      ],
+      "depTypeList": [
+        "dependencies",
+        "peerDependencies"
+      ],
+      "automerge": true,
+      "labels": [
+        "dependencies"
+      ]
+    }
   ]
 }
