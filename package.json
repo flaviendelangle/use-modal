@@ -58,7 +58,7 @@
     "react-test-renderer": "^17.0.1",
     "rimraf": "^3.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
-    "sinon": "^9.2.4",
+    "sinon": "^10.0.0",
     "ts-jest": "^26.5.4",
     "typescript": "^4.2.3"
   }
