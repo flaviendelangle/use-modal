@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/flaviendelangle/use-modal#readme",
   "peerDependencies": {
-    "react": ">=16.8.6"
+    "react": ">=16.14.0"
   },
   "devDependencies": {
     "@habx/eslint-config-client": "^6.0.0",
