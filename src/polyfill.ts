@@ -7,7 +7,7 @@
  * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
  */
 
-if (!('isConnected' in Node.prototype)) {
+if (typeof document === 'object' && !('isConnected' in Node.prototype)) {
   Object.defineProperty(Node.prototype, 'isConnected', {
     get() {
       return (
