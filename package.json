@@ -44,7 +44,7 @@
   "devDependencies": {
     "@habx/eslint-config-client": "^6.0.0",
     "@liftr/tscov": "^2.0.0",
-    "@testing-library/dom": "^7.30.4",
+    "@testing-library/dom": "^7.31.0",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.5",
     "@types/sinon": "^10.0.0",
