@@ -47,7 +47,7 @@
     "@testing-library/dom": "^7.31.0",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.9",
-    "@types/sinon": "^10.0.1",
+    "@types/sinon": "^10.0.2",
     "bili": "^5.0.5",
     "cross-env": "^7.0.3",
     "husky": "^4.3.8",
