@@ -46,7 +46,7 @@
     "@liftr/tscov": "^2.0.0",
     "@testing-library/dom": "^7.31.2",
     "@types/jest": "^26.0.24",
-    "@types/react": "^17.0.17",
+    "@types/react": "^17.0.18",
     "@types/sinon": "^10.0.2",
     "bili": "^5.0.5",
     "cross-env": "^7.0.3",
