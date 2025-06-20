@@ -42,7 +42,7 @@
     "react": ">=17.0.2"
   },
   "devDependencies": {
-    "@habx/eslint-config-client": "^6.2.0",
+    "@habx/eslint-config-client": "^6.10.0",
     "@liftr/tscov": "^2.0.0",
     "@testing-library/dom": "^7.31.2",
     "@types/jest": "^26.0.24",
